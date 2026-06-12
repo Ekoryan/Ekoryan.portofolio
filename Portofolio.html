@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Saya - Eko Ryan P.</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><polygon points='50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5' fill='%230F172A' stroke='%2310B981' stroke-width='10'/><circle cx='50' cy='50' r='20' fill='%234F46E5'/></svg>">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#4F46E5', // Indigo 600
+                        primaryHover: '#4338CA', // Indigo 700
+                        secondary: '#10B981', // Emerald 500
+                        dark: '#0F172A', // Slate 900
+                        darker: '#0B1120', // Slate 950
+                        light: '#F8FAFC', // Slate 50
+                        grayText: '#94A3B8' // Slate 400
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-dark text-light font-sans antialiased selection:bg-primary selection:text-white">
+
+    <nav class="fixed w-full z-50 bg-dark/80 backdrop-blur-md border-b border-white/10 transition-all">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0">
+                    <a href="#beranda" class="text-2xl font-bold tracking-wider text-white">
+                        <span class="text-primary">Eko Ryan P.</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#beranda" class="text-grayText hover:text-white transition-colors px-3 py-2 text-sm font-medium">Beranda</a>
+                        <a href="#tentang" class="text-grayText hover:text-white transition-colors px-3 py-2 text-sm font-medium">Tentang</a>
+                        <a href="#portofolio" class="text-grayText hover:text-white transition-colors px-3 py-2 text-sm font-medium">Portofolio</a>
+                        <a href="#kontak" class="bg-primary hover:bg-primaryHover text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-lg shadow-primary/30">Hubungi Saya</a>
+                    </div>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="menu-btn" class="text-grayText hover:text-white focus:outline-none p-2">
+                        <i data-lucide="menu" class="w-7 h-7"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-darker border-b border-white/10">
+            <div class="px-4 pt-2 pb-6 space-y-2 sm:px-3 flex flex-col">
+                <a href="#beranda" class="text-grayText hover:text-white block px-3 py-3 rounded-md text-base font-medium">Beranda</a>
+                <a href="#tentang" class="text-grayText hover:text-white block px-3 py-3 rounded-md text-base font-medium">Tentang</a>
+                <a href="#portofolio" class="text-grayText hover:text-white block px-3 py-3 rounded-md text-base font-medium">Portofolio</a>
+                <a href="#kontak" class="bg-primary text-white block px-3 py-3 rounded-md text-base font-medium mt-4 text-center">Hubungi Saya</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="beranda" class="pt-32 pb-20 md:pt-48 md:pb-32 px-4 max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12 min-h-screen">
+        <div class="flex-1 text-center md:text-left">
+            <h2 class="text-secondary font-semibold tracking-wide uppercase text-sm mb-3">Halo, selamat datang! 👋</h2>
+            <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
+                Saya <span class="text-white">Eko Ryan P.</span>,<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">UI/UX Designer & Data Analyst.</span>
+            </h1>
+            <p class="text-grayText text-base md:text-lg mb-8 max-w-2xl mx-auto md:mx-0">
+                Saya membantu mengubah ide-ide brilian menjadi produk digital yang indah, fungsional, dan memberikan pengalaman pengguna yang luar biasa.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
+                <a href="#portofolio" class="w-full sm:w-auto px-8 py-3.5 bg-primary hover:bg-primaryHover text-white rounded-full font-medium transition-all shadow-lg shadow-primary/30 flex items-center justify-center gap-2">
+                    Lihat Karya Saya <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+                    <a href="cv-saya_Eko_Ryan_P.pdf" download="CV_Saya.pdf" class="w-full sm:w-auto px-8 py-3.5 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full font-medium transition-all flex items-center justify-center">
+                        Unduh CV <i data-lucide="download" class="w-4 h-4 ml-2"></i>
+                    </a>
+            </div>
+        </div>
+        
+        <div class="flex-1 flex justify-center md:justify-end">
+            <div class="relative w-64 h-64 md:w-80 md:h-80">
+                <div class="absolute inset-0 bg-gradient-to-tr from-primary to-secondary rounded-full blur-3xl opacity-30 animate-pulse"></div>
+                <img src="https://ui-avatars.com/api/?name=Eko+Ryan+P.&background=4F46E5&color=fff&size=512" alt="Foto Profil" class="relative z-10 w-full h-full object-cover rounded-full border-4 border-white/10 shadow-2xl">
+            </div>
+        </div>
+    </section>
+
+    <section id="tentang" class="py-20 bg-darker">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Tentang <span class="text-primary">Saya</span></h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-grayText">
+                    <p>
+                        Bagi saya, pengembangan web dan desain antarmuka adalah ruang eksplorasi tanpa batas. Didorong oleh rasa ingin tahu, saya mendedikasikan diri untuk terus belajar dan mendalami fundamental di balik setiap baris kode maupun elemen visual. Melalui pemahaman dasar yang kuat, saya berkomitmen untuk membangun karya yang tidak hanya mengutamakan detail dan performa tinggi, tetapi juga memberikan pengalaman yang bermakna bagi pengguna.
+                    </p>
+                    <p>
+                        Selain *coding* dan desain, saya juga senang belajar tentang teknologi baru, membaca buku pengembangan diri, dan saya juga termasuk dalam Vibe Coding yang sedang berkembang dan mendalami Fundamental.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <div class="bg-dark p-4 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors text-center group">
+                        <i data-lucide="layout" class="w-8 h-8 mx-auto mb-2 text-grayText group-hover:text-primary transition-colors"></i>
+                        <span class="font-medium text-sm">UI/UX Design</span>
+                    </div>
+                    <div class="bg-dark p-4 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors text-center group">
+                        <i data-lucide="code-2" class="w-8 h-8 mx-auto mb-2 text-grayText group-hover:text-primary transition-colors"></i>
+                        <span class="font-medium text-sm">Web Dev</span>
+                    </div>
+                    <div class="bg-dark p-4 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors text-center group">
+                        <i data-lucide="smartphone" class="w-8 h-8 mx-auto mb-2 text-grayText group-hover:text-primary transition-colors"></i>
+                        <span class="font-medium text-sm">Responsive</span>
+                    </div>
+                    <div class="bg-dark p-4 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors text-center group">
+                        <i data-lucide="database" class="w-8 h-8 mx-auto mb-2 text-grayText group-hover:text-primary transition-colors"></i>
+                        <span class="font-medium text-sm">Backend</span>
+                    </div>
+                    <div class="bg-dark p-4 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors text-center group">
+                        <i data-lucide="pen-tool" class="w-8 h-8 mx-auto mb-2 text-grayText group-hover:text-primary transition-colors"></i>
+                        <span class="font-medium text-sm">Figma</span>
+                    </div>
+                    <div class="bg-dark p-4 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors text-center group">
+                        <i data-lucide="braces" class="w-8 h-8 mx-auto mb-2 text-grayText group-hover:text-primary transition-colors"></i>
+                        <span class="font-medium text-sm">React/Next.js</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portofolio" class="py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Karya <span class="text-primary">Terbaru</span></h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded-full mb-6"></div>
+                <p class="text-grayText">Beberapa proyek pilihan yang pernah saya kerjakan.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group bg-darker rounded-3xl overflow-hidden border border-white/5 hover:border-white/20 transition-all hover:-translate-y-2">
+                    <div class="h-48 bg-gray-800 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop" alt="Proyek 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">Web App</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Platform Manajemen Tugas</h3>
+                        <p class="text-grayText text-sm mb-4 line-clamp-2">Aplikasi manajemen tugas yang dirancang khusus untuk pelajar dengan fitur kalender dan pengingat yang responsif.</p>
+                        <a href="https://surviving-aqua-x88kxe5x.edgeone.app/" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors">
+                            Lihat Detail <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="group bg-darker rounded-3xl overflow-hidden border border-white/5 hover:border-white/20 transition-all hover:-translate-y-2">
+                    <div class="h-48 bg-gray-800 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?q=80&w=600&auto=format&fit=crop" alt="Proyek 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">Web App</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Ensiklopedia Alat Kesehatan Dasar</h3>
+                        <p class="text-grayText text-sm mb-4 line-clamp-2">Ensiklopedia interaktif tentang alat kesehatan dasar yang dirancang untuk memudahkan akses informasi bagi pengguna.</p>
+                        <a href="https://successive-indigo-4vcyyqpttp.edgeone.app/intro.html" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors">
+                            Lihat Detail <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="group bg-darker rounded-3xl overflow-hidden border border-white/5 hover:border-white/20 transition-all hover:-translate-y-2">
+                    <div class="h-48 bg-gray-800 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=600&auto=format&fit=crop" alt="Proyek 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">Web App</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">HTML Ensiklopedia Alat Kesehatan Dasar</h3>
+                        <p class="text-grayText text-sm mb-4 line-clamp-2">HTML dasar Ensiklopedia interaktif tentang alat kesehatan dasar yang dirancang untuk memudahkan akses informasi bagi pengguna.</p>
+                        <a href="https://funny-bronze-jhbccgncie.edgeone.app/" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors">
+                            Lihat Detail <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontak" class="py-20 bg-darker">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-dark p-8 md:p-12 rounded-3xl border border-white/5 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                
+                <div class="relative z-10 flex flex-col md:flex-row gap-12">
+                    <div class="flex-1">
+                        <h2 class="text-3xl font-bold mb-4">Mari Bekerja <span class="text-primary">Sama!</span></h2>
+                        <p class="text-grayText mb-8">Punya proyek yang ingin didiskusikan atau sekadar ingin menyapa? Jangan ragu untuk mengirim pesan.</p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 text-grayText hover:text-white transition-colors">
+                                <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-primary">
+                                    <i data-lucide="mail" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs uppercase tracking-wider font-semibold">Email</p>
+                                    <p class="font-medium">halo@namaanda.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 text-grayText hover:text-white transition-colors">
+                                <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-primary">
+                                    <i data-lucide="map-pin" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs uppercase tracking-wider font-semibold">Lokasi</p>
+                                    <p class="font-medium">Jakarta, Indonesia</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1">
+                        <form class="space-y-4">
+                            <div>
+                                <input type="text" placeholder="Nama Anda" class="w-full px-4 py-3 bg-darker border border-white/10 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-white transition-all placeholder:text-grayText/50">
+                            </div>
+                            <div>
+                                <input type="email" placeholder="Email Anda" class="w-full px-4 py-3 bg-darker border border-white/10 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-white transition-all placeholder:text-grayText/50">
+                            </div>
+                            <div>
+                                <textarea rows="4" placeholder="Pesan Anda..." class="w-full px-4 py-3 bg-darker border border-white/10 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-white transition-all placeholder:text-grayText/50 resize-none"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-primary hover:bg-primaryHover text-white font-medium py-3 rounded-xl transition-all shadow-lg shadow-primary/30 flex items-center justify-center gap-2">
+                                Kirim Pesan <i data-lucide="send" class="w-4 h-4"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark py-8 border-t border-white/10 text-center">
+        <div class="flex justify-center gap-6 mb-6">
+            <a href="#" class="text-grayText hover:text-primary transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+            <a href="#" class="text-grayText hover:text-primary transition-colors"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+            <a href="#" class="text-grayText hover:text-primary transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+            <a href="#" class="text-grayText hover:text-primary transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+        </div>
+        <p class="text-grayText text-sm">
+            &copy; 2026 Eko Ryan P. Dibuat dengan menggunakan HTML & Tailwind CSS.
+        </p>
+    </footer>
+
+    <script>
+        // Inisialisasi ikon Lucide
+        lucide.createIcons();
+
+        // Logika untuk Navigasi Mobile (Hamburger Menu)
+        const btn = document.getElementById('menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const menuLinks = menu.querySelectorAll('a');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Tutup menu saat tautan di klik (pada versi mobile)
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Efek Navbar transparan saat di paling atas, dan blur/solid saat di-scroll
+        const navbar = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-lg', 'bg-dark/95');
+                navbar.classList.remove('bg-dark/80');
+            } else {
+                navbar.classList.remove('shadow-lg', 'bg-dark/95');
+                navbar.classList.add('bg-dark/80');
+            }
+        });
+    </script>
+</body>
+</html>
