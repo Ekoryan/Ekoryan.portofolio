@@ -1,1 +1,0 @@
-# Ekoryan.portofolio
