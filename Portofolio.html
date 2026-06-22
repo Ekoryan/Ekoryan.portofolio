@@ -31,8 +31,122 @@
     </script>
 
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom keyframes & scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B1120;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4F46E5;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4338CA;
+        }
+
+        /* Cursor Glow spotlight */
+        .cursor-glow {
+            position: fixed;
+            pointer-events: none;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.12) 0%, rgba(16, 185, 129, 0.04) 50%, transparent 85%);
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            transition: width 0.3s, height 0.3s;
+            mix-blend-mode: screen;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        /* Floating animations */
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(1.5deg); }
+        }
+        @keyframes float-reverse {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(12px) rotate(-1.5deg); }
+        }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.25; transform: scale(1); }
+            50% { opacity: 0.45; transform: scale(1.05); }
+        }
+        @keyframes spin-slow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes spin-reverse {
+            0% { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
+        }
+        @keyframes text-blink {
+            50% { border-color: transparent }
+        }
+
+        .animate-float-slow {
+            animation: float-slow 6s ease-in-out infinite;
+        }
+        .animate-float-reverse {
+            animation: float-reverse 7s ease-in-out infinite;
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 8s ease-in-out infinite;
+        }
+        .animate-spin-slow {
+            animation: spin-slow 25s linear infinite;
+        }
+        .animate-spin-reverse {
+            animation: spin-reverse 20s linear infinite;
+        }
+
+        /* Typewriter cursor styling */
+        .cursor-typewriter {
+            border-right: 2px solid #10B981;
+            animation: text-blink 0.75s step-end infinite;
+        }
+
+        /* Premium glass and glow card classes */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .glass-card:hover {
+            border-color: rgba(79, 70, 229, 0.25);
+            box-shadow: 0 15px 35px -10px rgba(79, 70, 229, 0.15);
+        }
+
+        /* Project card animations */
+        .project-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .project-card.hidden-filter {
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            pointer-events: none;
+            position: absolute;
+            width: 0;
+            height: 0;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            overflow: hidden;
+        }
+    </style>
 </head>
-<body class="bg-dark text-light font-sans antialiased selection:bg-primary selection:text-white">
+<body class="bg-dark text-light font-sans antialiased selection:bg-primary selection:text-white overflow-x-hidden relative">
+
+    <!-- Cursor Glow Background Spotlight -->
+    <div id="cursor-glow" class="cursor-glow"></div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
 
     <nav class="fixed w-full z-50 bg-dark/80 backdrop-blur-md border-b border-white/10 transition-all">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -70,30 +184,53 @@
         </div>
     </nav>
 
-    <section id="beranda" class="pt-32 pb-20 md:pt-48 md:pb-32 px-4 max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12 min-h-screen">
-        <div class="flex-1 text-center md:text-left">
+    <section id="beranda" class="pt-32 pb-20 md:pt-48 md:pb-32 px-4 max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12 min-h-screen relative">
+        <div class="flex-1 text-center md:text-left z-10">
             <h2 class="text-secondary font-semibold tracking-wide uppercase text-sm mb-3">Halo, selamat datang! 👋</h2>
             <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
-                Saya <span class="text-white">Eko Ryan P.</span>,<br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">UI/UX Designer & Data Analyst.</span>
+                Saya <span class="text-white font-extrabold tracking-tight">Eko Ryan P.</span>,<br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary cursor-typewriter pb-1" id="typewriter-text" data-words='["UI/UX Designer", "Data Analyst", "Web Developer"]' data-wait="2500">UI/UX Designer</span>
             </h1>
-            <p class="text-grayText text-base md:text-lg mb-8 max-w-2xl mx-auto md:mx-0">
+            <p class="text-grayText text-base md:text-lg mb-8 max-w-2xl mx-auto md:mx-0 leading-relaxed">
                 Saya membantu mengubah ide-ide brilian menjadi produk digital yang indah, fungsional, dan memberikan pengalaman pengguna yang luar biasa.
             </p>
             <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
-                <a href="#portofolio" class="w-full sm:w-auto px-8 py-3.5 bg-primary hover:bg-primaryHover text-white rounded-full font-medium transition-all shadow-lg shadow-primary/30 flex items-center justify-center gap-2">
+                <a href="#portofolio" class="w-full sm:w-auto px-8 py-3.5 bg-primary hover:bg-primaryHover text-white rounded-full font-medium transition-all shadow-lg shadow-primary/30 flex items-center justify-center gap-2 hover:-translate-y-0.5">
                     Lihat Karya Saya <i data-lucide="arrow-right" class="w-5 h-5"></i>
                 </a>
-                    <a href="cv-saya_Eko_Ryan_P.pdf" download="CV_Saya.pdf" class="w-full sm:w-auto px-8 py-3.5 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full font-medium transition-all flex items-center justify-center">
-                        Unduh CV <i data-lucide="download" class="w-4 h-4 ml-2"></i>
-                    </a>
+                <a href="cv-saya_Eko_Ryan_P.pdf" download="CV_Saya.pdf" class="w-full sm:w-auto px-8 py-3.5 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full font-medium transition-all flex items-center justify-center hover:-translate-y-0.5">
+                    Unduh CV <i data-lucide="download" class="w-4 h-4 ml-2"></i>
+                </a>
             </div>
         </div>
         
-        <div class="flex-1 flex justify-center md:justify-end">
-            <div class="relative w-64 h-64 md:w-80 md:h-80">
-                <div class="absolute inset-0 bg-gradient-to-tr from-primary to-secondary rounded-full blur-3xl opacity-30 animate-pulse"></div>
-                <img src="https://ui-avatars.com/api/?name=Eko+Ryan+P.&background=4F46E5&color=fff&size=512" alt="Foto Profil" class="relative z-10 w-full h-full object-cover rounded-full border-4 border-white/10 shadow-2xl">
+        <div class="flex-1 flex justify-center md:justify-end z-10">
+            <div class="relative w-64 h-64 md:w-80 md:h-80 select-none">
+                <!-- Blurred background glowing blobs -->
+                <div class="absolute inset-0 bg-gradient-to-tr from-primary to-secondary rounded-full blur-3xl opacity-40 animate-pulse-slow"></div>
+                
+                <!-- Rotating ring 1: Primary (indigo) -->
+                <div class="absolute inset-2 rounded-full border border-dashed border-primary/40 animate-spin-slow"></div>
+                
+                <!-- Rotating ring 2: Secondary (emerald) -->
+                <div class="absolute -inset-1 rounded-full border border-dashed border-secondary/30 animate-spin-reverse"></div>
+                
+                <!-- Floating stat badge 1: Projects -->
+                <div class="absolute -top-2 -left-4 glass-card px-4 py-2.5 rounded-2xl flex items-center gap-2.5 animate-float-slow shadow-lg z-20 border border-white/10">
+                    <span class="flex h-2.5 w-2.5 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-secondary"></span>
+                    </span>
+                    <span class="text-xs font-semibold text-white tracking-wide">5+ Proyek Selesai</span>
+                </div>
+
+                <!-- Floating stat badge 2: Open to Work / Ready -->
+                <div class="absolute -bottom-2 -right-4 glass-card px-4 py-2.5 rounded-2xl flex items-center gap-2 animate-float-reverse shadow-lg z-20 border border-white/10">
+                    <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
+                    <span class="text-xs font-semibold text-white tracking-wide">Terbuka Kerja Sama</span>
+                </div>
+
+                <img src="https://ui-avatars.com/api/?name=Eko+Ryan+P.&background=4F46E5&color=fff&size=512" alt="Foto Profil" class="relative z-10 w-full h-full object-cover rounded-full border-4 border-white/10 shadow-2xl hover:scale-[1.03] transition-transform duration-500">
             </div>
         </div>
     </section>
@@ -115,111 +252,154 @@
                     </p>
                 </div>
                 
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    <div class="bg-dark p-4 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors text-center group">
-                        <i data-lucide="layout" class="w-8 h-8 mx-auto mb-2 text-grayText group-hover:text-primary transition-colors"></i>
-                        <span class="font-medium text-sm">UI/UX Design</span>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 select-none">
+                    <div class="glass-card p-6 rounded-2xl text-center group hover:-translate-y-1.5 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3.5 group-hover:bg-primary/20 transition-all duration-300">
+                            <i data-lucide="layout" class="w-6 h-6 text-grayText group-hover:text-primary transition-colors duration-300"></i>
+                        </div>
+                        <span class="font-semibold text-sm text-light group-hover:text-white transition-colors duration-300">UI/UX Design</span>
                     </div>
-                    <div class="bg-dark p-4 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors text-center group">
-                        <i data-lucide="code-2" class="w-8 h-8 mx-auto mb-2 text-grayText group-hover:text-primary transition-colors"></i>
-                        <span class="font-medium text-sm">Web Dev</span>
+                    <div class="glass-card p-6 rounded-2xl text-center group hover:-translate-y-1.5 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3.5 group-hover:bg-primary/20 transition-all duration-300">
+                            <i data-lucide="code-2" class="w-6 h-6 text-grayText group-hover:text-primary transition-colors duration-300"></i>
+                        </div>
+                        <span class="font-semibold text-sm text-light group-hover:text-white transition-colors duration-300">Web Dev</span>
                     </div>
-                    <div class="bg-dark p-4 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors text-center group">
-                        <i data-lucide="smartphone" class="w-8 h-8 mx-auto mb-2 text-grayText group-hover:text-primary transition-colors"></i>
-                        <span class="font-medium text-sm">Responsive</span>
+                    <div class="glass-card p-6 rounded-2xl text-center group hover:-translate-y-1.5 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3.5 group-hover:bg-primary/20 transition-all duration-300">
+                            <i data-lucide="smartphone" class="w-6 h-6 text-grayText group-hover:text-primary transition-colors duration-300"></i>
+                        </div>
+                        <span class="font-semibold text-sm text-light group-hover:text-white transition-colors duration-300">Responsive</span>
                     </div>
-                    <div class="bg-dark p-4 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors text-center group">
-                        <i data-lucide="database" class="w-8 h-8 mx-auto mb-2 text-grayText group-hover:text-primary transition-colors"></i>
-                        <span class="font-medium text-sm">Backend</span>
+                    <div class="glass-card p-6 rounded-2xl text-center group hover:-translate-y-1.5 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3.5 group-hover:bg-primary/20 transition-all duration-300">
+                            <i data-lucide="database" class="w-6 h-6 text-grayText group-hover:text-primary transition-colors duration-300"></i>
+                        </div>
+                        <span class="font-semibold text-sm text-light group-hover:text-white transition-colors duration-300">Backend</span>
                     </div>
-                    <div class="bg-dark p-4 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors text-center group">
-                        <i data-lucide="pen-tool" class="w-8 h-8 mx-auto mb-2 text-grayText group-hover:text-primary transition-colors"></i>
-                        <span class="font-medium text-sm">Figma</span>
+                    <div class="glass-card p-6 rounded-2xl text-center group hover:-translate-y-1.5 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3.5 group-hover:bg-primary/20 transition-all duration-300">
+                            <i data-lucide="pen-tool" class="w-6 h-6 text-grayText group-hover:text-primary transition-colors duration-300"></i>
+                        </div>
+                        <span class="font-semibold text-sm text-light group-hover:text-white transition-colors duration-300">Figma</span>
                     </div>
-                    <div class="bg-dark p-4 rounded-2xl border border-white/5 hover:border-primary/50 transition-colors text-center group">
-                        <i data-lucide="braces" class="w-8 h-8 mx-auto mb-2 text-grayText group-hover:text-primary transition-colors"></i>
-                        <span class="font-medium text-sm">Node.js/React</span>
+                    <div class="glass-card p-6 rounded-2xl text-center group hover:-translate-y-1.5 transition-all duration-300">
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3.5 group-hover:bg-primary/20 transition-all duration-300">
+                            <i data-lucide="braces" class="w-6 h-6 text-grayText group-hover:text-primary transition-colors duration-300"></i>
+                        </div>
+                        <span class="font-semibold text-sm text-light group-hover:text-white transition-colors duration-300">Node.js/React</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="portofolio" class="py-20">
-        <div class="max-w-6xl mx-auto px-4">
+    <section id="portofolio" class="py-20 relative">
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4">Karya <span class="text-primary">Terbaru</span></h2>
                 <div class="w-20 h-1 bg-primary mx-auto rounded-full mb-6"></div>
-                <p class="text-grayText">Beberapa proyek pilihan yang pernah saya kerjakan.</p>
+                <p class="text-grayText mb-10">Beberapa proyek pilihan yang pernah saya kerjakan.</p>
+                
+                <!-- Portfolio Filter Buttons -->
+                <div class="flex flex-wrap justify-center gap-3 select-none">
+                    <button class="filter-btn px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-primary bg-primary text-white transition-all duration-300" data-filter="all">Semua</button>
+                    <button class="filter-btn px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-white/10 bg-transparent text-grayText hover:text-white hover:border-white/20 transition-all duration-300" data-filter="webapp">Web App</button>
+                    <button class="filter-btn px-6 py-2.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-white/10 bg-transparent text-grayText hover:text-white hover:border-white/20 transition-all duration-300" data-filter="ecommerce">E-Commerce</button>
+                </div>
             </div>
 
             <!-- PAGAR GRID DIMULAI DI SINI -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div id="portfolio-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
                 <!-- PROYEK 1 -->
-                <div class="group bg-darker rounded-3xl overflow-hidden border border-white/5 hover:border-white/20 transition-all hover:-translate-y-2">
-                    <div class="h-48 bg-gray-800 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop" alt="Proyek 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="project-card group bg-darker rounded-3xl overflow-hidden border border-white/5 hover:border-white/20 transition-all duration-300" data-category="webapp">
+                    <div class="h-48 bg-slate-900 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop" alt="Proyek 1" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">Web App</span>
+                            <span class="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">Web App</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-2">Platform Manajemen Tugas</h3>
-                        <p class="text-grayText text-sm mb-4 line-clamp-2">Aplikasi manajemen tugas yang dirancang khusus untuk pelajar dengan fitur kalender dan pengingat yang responsif.</p>
-                        <a href="https://ekoryan.github.io/PlatformManajemenTugas_Basic/" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">Platform Manajemen Tugas</h3>
+                        <p class="text-grayText text-sm mb-4 line-clamp-2 leading-relaxed">Aplikasi manajemen tugas yang dirancang khusus untuk pelajar dengan fitur kalender dan pengingat yang responsif.</p>
+                        <a href="https://ekoryan.github.io/PlatformManajemenTugas_Basic/" target="_blank" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors duration-300">
                             Lihat Detail <i data-lucide="external-link" class="w-4 h-4"></i>
                         </a>
                     </div>
                 </div>
 
                 <!-- PROYEK 2 -->
-                <div class="group bg-darker rounded-3xl overflow-hidden border border-white/5 hover:border-white/20 transition-all hover:-translate-y-2">
-                    <div class="h-48 bg-gray-800 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?q=80&w=600&auto=format&fit=crop" alt="Proyek 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="project-card group bg-darker rounded-3xl overflow-hidden border border-white/5 hover:border-white/20 transition-all duration-300" data-category="webapp">
+                    <div class="h-48 bg-slate-900 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?q=80&w=600&auto=format&fit=crop" alt="Proyek 2" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">Web App</span>
+                            <span class="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">Web App</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-2">Ensiklopedia Alat Kesehatan Dasar</h3>
-                        <p class="text-grayText text-sm mb-4 line-clamp-2">Ensiklopedia interaktif tentang alat kesehatan dasar yang dirancang untuk memudahkan akses informasi bagi pengguna.</p>
-                        <a href="https://successive-indigo-4vcyyqpttp.edgeone.app/intro.html" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">Ensiklopedia Alat Kesehatan Dasar</h3>
+                        <p class="text-grayText text-sm mb-4 line-clamp-2 leading-relaxed">Ensiklopedia interaktif tentang alat kesehatan dasar yang dirancang untuk memudahkan akses informasi bagi pengguna.</p>
+                        <a href="https://successive-indigo-4vcyyqpttp.edgeone.app/intro.html" target="_blank" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors duration-300">
                             Lihat Detail <i data-lucide="external-link" class="w-4 h-4"></i>
                         </a>
                     </div>
                 </div>
 
                 <!-- PROYEK 3 -->
-                <div class="group bg-darker rounded-3xl overflow-hidden border border-white/5 hover:border-white/20 transition-all hover:-translate-y-2">
-                    <div class="h-48 bg-gray-800 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=600&auto=format&fit=crop" alt="Proyek 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="project-card group bg-darker rounded-3xl overflow-hidden border border-white/5 hover:border-white/20 transition-all duration-300" data-category="webapp">
+                    <div class="h-48 bg-slate-900 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=600&auto=format&fit=crop" alt="Proyek 3" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">Web App</span>
+                            <span class="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">Web App</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-2">HTML Ensiklopedia Alat Kesehatan Dasar</h3>
-                        <p class="text-grayText text-sm mb-4 line-clamp-2">HTML dasar Ensiklopedia interaktif tentang alat kesehatan dasar yang dirancang untuk memudahkan akses informasi bagi pengguna.</p>
-                        <a href="https://funny-bronze-jhbccgncie.edgeone.app/" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">HTML Ensiklopedia Alat Kesehatan Dasar</h3>
+                        <p class="text-grayText text-sm mb-4 line-clamp-2 leading-relaxed">HTML dasar Ensiklopedia interaktif tentang alat kesehatan dasar yang dirancang untuk memudahkan akses informasi bagi pengguna.</p>
+                        <a href="https://funny-bronze-jhbccgncie.edgeone.app/" target="_blank" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors duration-300">
                             Lihat Detail <i data-lucide="external-link" class="w-4 h-4"></i>
                         </a>
                     </div>
                 </div>
 
                 <!-- PROYEK 4 -->
-                <div class="group bg-darker rounded-3xl overflow-hidden border border-white/5 hover:border-white/20 transition-all hover:-translate-y-2">
-                    <div class="h-48 bg-gray-800 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=600&auto=format&fit=crop" alt="To-Do Life Dashboard" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="project-card group bg-darker rounded-3xl overflow-hidden border border-white/5 hover:border-white/20 transition-all duration-300" data-category="webapp">
+                    <div class="h-48 bg-slate-900 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?q=80&w=600&auto=format&fit=crop" alt="To-Do Life Dashboard" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
                     </div>
                     <div class="p-6">
                         <div class="flex items-center gap-2 mb-3">
-                            <span class="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">Web App</span>
-                            <span class="text-xs font-semibold text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full">Medium</span>
+                            <span class="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">Web App</span>
+                            <span class="text-xs font-semibold text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full border border-amber-400/20">Medium</span>
                         </div>
-                        <h3 class="text-xl font-bold mb-2">To-Do Life Dashboard</h3>
-                        <p class="text-grayText text-sm mb-4 line-clamp-2">Aplikasi manajemen tugas dan produktivitas harian interaktif yang dirancang untuk membantu mengorganisir aktivitas dan target pribadi.</p>
-                        <a href="https://ekoryan.github.io/CodingCamp-MiniProject-EkoryanP/" target="_blank" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">To-Do Life Dashboard</h3>
+                        <p class="text-grayText text-sm mb-4 line-clamp-2 leading-relaxed">Aplikasi manajemen tugas dan produktivitas harian interaktif yang dirancang untuk membantu mengorganisir aktivitas dan target pribadi.</p>
+                        <a href="https://ekoryan.github.io/CodingCamp-MiniProject-EkoryanP/" target="_blank" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors duration-300">
+                            Lihat Detail <i data-lucide="external-link" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- PROYEK 5 -->
+                <div class="project-card group bg-darker rounded-3xl overflow-hidden border border-white/5 hover:border-white/20 transition-all duration-300" data-category="ecommerce">
+                    <div class="h-48 bg-slate-900 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=600&auto=format&fit=crop" alt="E-Commerce Alkes" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker to-transparent opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full border border-primary/20">Web App</span>
+                            <span class="text-xs font-semibold text-secondary bg-secondary/10 px-3 py-1 rounded-full border border-secondary/20">E-Commerce</span>
+                            <span class="text-xs font-semibold text-red-400 bg-red-400/10 px-3 py-1 rounded-full border border-red-400/20">Hard</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors duration-300">E-Commerce Alat Kesehatan</h3>
+                        <p class="text-grayText text-sm mb-4 line-clamp-2 leading-relaxed">Platform toko online responsif yang dirancang untuk memudahkan pencarian, pemesanan, dan pembelian berbagai produk serta alat kesehatan.</p>
+                        <a href="https://ekoryan.github.io/E-Commers_Alkes/" target="_blank" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors duration-300">
                             Lihat Detail <i data-lucide="external-link" class="w-4 h-4"></i>
                         </a>
                     </div>
@@ -230,8 +410,8 @@
         </div>
     </section>
 
-    <section id="kontak" class="py-20 bg-darker">
-        <div class="max-w-4xl mx-auto px-4">
+    <section id="kontak" class="py-20 bg-darker relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 relative z-10">
             <div class="bg-dark p-8 md:p-12 rounded-3xl border border-white/5 shadow-2xl relative overflow-hidden">
                 <div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
                 
@@ -241,40 +421,40 @@
                         <p class="text-grayText mb-8">Punya proyek yang ingin didiskusikan atau sekadar ingin menyapa? Jangan ragu untuk mengirim pesan.</p>
                         
                         <div class="space-y-4">
-                            <div class="flex items-center gap-4 text-grayText hover:text-white transition-colors">
-                                <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-primary">
+                            <a href="mailto:ekoryan833@gmail.com" class="flex items-center gap-4 text-grayText hover:text-white transition-colors group">
+                                <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-primary group-hover:bg-primary/10 transition-colors duration-300">
                                     <i data-lucide="mail" class="w-5 h-5"></i>
                                 </div>
                                 <div>
                                     <p class="text-xs uppercase tracking-wider font-semibold">Email</p>
-                                    <p class="font-medium">ekoryan833gmail.com</p>
+                                    <p class="font-medium text-light group-hover:text-white transition-colors">ekoryan833@gmail.com</p>
                                 </div>
-                            </div>
+                            </a>
                             <div class="flex items-center gap-4 text-grayText hover:text-white transition-colors">
                                 <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center text-primary">
                                     <i data-lucide="map-pin" class="w-5 h-5"></i>
                                 </div>
                                 <div>
                                     <p class="text-xs uppercase tracking-wider font-semibold">Lokasi</p>
-                                    <p class="font-medium">Jakarta, Indonesia</p>
+                                    <p class="font-medium text-light">Jakarta, Indonesia</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="flex-1">
-                        <form class="space-y-4">
+                        <form id="contact-form" class="space-y-4">
                             <div>
-                                <input type="text" placeholder="Nama Anda" class="w-full px-4 py-3 bg-darker border border-white/10 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-white transition-all placeholder:text-grayText/50">
+                                <input type="text" placeholder="Nama Anda" class="w-full px-4 py-3.5 bg-darker/65 border border-white/10 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-white transition-all duration-300 placeholder:text-grayText/40 focus:bg-darker" required>
                             </div>
                             <div>
-                                <input type="email" placeholder="Email Anda" class="w-full px-4 py-3 bg-darker border border-white/10 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-white transition-all placeholder:text-grayText/50">
+                                <input type="email" placeholder="Email Anda" class="w-full px-4 py-3.5 bg-darker/65 border border-white/10 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-white transition-all duration-300 placeholder:text-grayText/40 focus:bg-darker" required>
                             </div>
                             <div>
-                                <textarea rows="4" placeholder="Pesan Anda..." class="w-full px-4 py-3 bg-darker border border-white/10 rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-white transition-all placeholder:text-grayText/50 resize-none"></textarea>
+                                <textarea rows="4" placeholder="Pesan Anda..." class="w-full px-4 py-3.5 bg-darker/65 border border-white/10 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-white transition-all duration-300 placeholder:text-grayText/40 focus:bg-darker resize-none" required></textarea>
                             </div>
-                            <button type="submit" class="w-full bg-primary hover:bg-primaryHover text-white font-medium py-3 rounded-xl transition-all shadow-lg shadow-primary/30 flex items-center justify-center gap-2">
-                                Kirim Pesan <i data-lucide="send" class="w-4 h-4"></i>
+                            <button type="submit" class="w-full bg-primary hover:bg-primaryHover text-white font-semibold py-3.5 rounded-xl transition-all duration-300 shadow-lg shadow-primary/30 flex items-center justify-center gap-2 hover:-translate-y-0.5">
+                                Kirim Pesan <i data-lucide="send" class="w-4.5 h-4.5"></i>
                             </button>
                         </form>
                     </div>
@@ -326,6 +506,210 @@
                 navbar.classList.add('bg-dark/80');
             }
         });
+
+        // Efek Sorotan Kursor (Cursor Glow Spotlight)
+        const glow = document.getElementById('cursor-glow');
+        if (glow) {
+            window.addEventListener('mousemove', (e) => {
+                glow.style.opacity = '1';
+                glow.style.left = e.clientX + 'px';
+                glow.style.top = e.clientY + 'px';
+            });
+            window.addEventListener('mouseleave', () => {
+                glow.style.opacity = '0';
+            });
+        }
+
+        // Efek Mengetik Dinamis (Typewriter Effect)
+        class TypeWriter {
+            constructor(txtElement, words, wait = 2500) {
+                this.txtElement = txtElement;
+                this.words = words;
+                this.txt = '';
+                this.wordIndex = 0;
+                this.wait = parseInt(wait, 10);
+                this.type();
+                this.isDeleting = false;
+            }
+
+            type() {
+                const current = this.wordIndex % this.words.length;
+                const fullTxt = this.words[current];
+
+                if (this.isDeleting) {
+                    this.txt = fullTxt.substring(0, this.txt.length - 1);
+                } else {
+                    this.txt = fullTxt.substring(0, this.txt.length + 1);
+                }
+
+                this.txtElement.innerHTML = this.txt;
+
+                let typeSpeed = 80;
+
+                if (this.isDeleting) {
+                    typeSpeed /= 2;
+                }
+
+                if (!this.isDeleting && this.txt === fullTxt) {
+                    typeSpeed = this.wait;
+                    this.isDeleting = true;
+                } else if (this.isDeleting && this.txt === '') {
+                    this.isDeleting = false;
+                    this.wordIndex++;
+                    typeSpeed = 500;
+                }
+
+                setTimeout(() => this.type(), typeSpeed);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inisialisasi TypeWriter
+            const txtElement = document.getElementById('typewriter-text');
+            if (txtElement) {
+                const words = JSON.parse(txtElement.getAttribute('data-words'));
+                const wait = txtElement.getAttribute('data-wait');
+                new TypeWriter(txtElement, words, wait);
+            }
+
+            // Logika Filter Portofolio
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Reset styling untuk semua tombol filter
+                    filterButtons.forEach(button => {
+                        button.classList.remove('bg-primary', 'text-white', 'border-primary');
+                        button.classList.add('bg-transparent', 'text-grayText', 'border-white/10');
+                    });
+
+                    // Set aktif untuk tombol yang di-klik
+                    btn.classList.add('bg-primary', 'text-white', 'border-primary');
+                    btn.classList.remove('bg-transparent', 'text-grayText', 'border-white/10');
+
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    projectCards.forEach(card => {
+                        if (filterValue === 'all') {
+                            card.classList.remove('hidden-filter');
+                        } else {
+                            if (card.getAttribute('data-category') === filterValue) {
+                                card.classList.remove('hidden-filter');
+                            } else {
+                                card.classList.add('hidden-filter');
+                            }
+                        }
+                    });
+                });
+            });
+
+            // Fungsi Menampilkan Toast
+            function showToast(message, type = 'success') {
+                const container = document.getElementById('toast-container');
+                if (!container) return;
+
+                const toast = document.createElement('div');
+                toast.className = `flex items-center gap-3 px-5 py-4 rounded-2xl border bg-darker/90 backdrop-blur-md text-white shadow-2xl transition-all duration-500 translate-y-10 opacity-0 pointer-events-auto max-w-sm border-white/10`;
+                
+                if (type === 'success') {
+                    toast.classList.add('border-secondary/30');
+                    toast.innerHTML = `
+                        <div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary">
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-white">Berhasil!</p>
+                            <p class="text-xs text-grayText">${message}</p>
+                        </div>
+                    `;
+                } else {
+                    toast.classList.add('border-red-500/30');
+                    toast.innerHTML = `
+                        <div class="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center text-red-400">
+                            <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-white">Gagal!</p>
+                            <p class="text-xs text-grayText">${message}</p>
+                        </div>
+                    `;
+                }
+
+                container.appendChild(toast);
+                lucide.createIcons();
+
+                // Animasi masuk
+                setTimeout(() => {
+                    toast.classList.remove('translate-y-10', 'opacity-0');
+                }, 10);
+
+                // Animasi keluar & hapus
+                setTimeout(() => {
+                    toast.classList.add('translate-y-10', 'opacity-0');
+                    setTimeout(() => {
+                        toast.remove();
+                    }, 500);
+                }, 4000);
+            }
+
+            // Logika Submit Formulir Kontak
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const nameInput = contactForm.querySelector('input[type="text"]');
+                    const emailInput = contactForm.querySelector('input[type="email"]');
+                    const messageInput = contactForm.querySelector('textarea');
+                    const submitBtn = contactForm.querySelector('button[type="submit"]');
+
+                    if (!nameInput.value.trim() || !emailInput.value.trim() || !messageInput.value.trim()) {
+                        showToast('Harap isi semua kolom input terlebih dahulu.', 'error');
+                        return;
+                    }
+
+                    // Simulasi loading kirim pesan
+                    const originalBtnContent = submitBtn.innerHTML;
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = `Mengirim... <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>`;
+
+                    setTimeout(() => {
+                        showToast('Pesan Anda berhasil dikirim ke Eko Ryan P.');
+                        contactForm.reset();
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = originalBtnContent;
+                        lucide.createIcons();
+                    }, 1200);
+                });
+            }
+
+            // Logika Tombol Kembali ke Atas (Back to Top)
+            const backToTopBtn = document.getElementById('back-to-top');
+            if (backToTopBtn) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 400) {
+                        backToTopBtn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+                        backToTopBtn.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                    } else {
+                        backToTopBtn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+                        backToTopBtn.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                    }
+                });
+
+                backToTopBtn.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
     </script>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 z-40 bg-primary hover:bg-primaryHover text-white p-3 rounded-full shadow-lg shadow-primary/30 opacity-0 translate-y-10 transition-all duration-300 pointer-events-none hover:-translate-y-1">
+        <i data-lucide="arrow-up" class="w-6 h-6"></i>
+    </button>
 </body>
 </html>
